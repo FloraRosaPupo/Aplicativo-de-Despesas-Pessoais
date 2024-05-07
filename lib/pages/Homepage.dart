@@ -1,5 +1,6 @@
 import 'package:despesaspessoais/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +29,6 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.black,
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
@@ -50,22 +50,52 @@ class _HomePageState extends State<HomePage> {
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 2)),
+                          border: Border.all(color: Colors.purple, width: 2)),
                       padding: EdgeInsets.all(10),
-                      child: Text(tr.value.toString()),
+                      child: Text(
+                        'R\$' + tr.value.toString(), //ou 'R\$ + ${tr.value}'
+                        style: TextStyle(
+                            color: Colors.purple,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(tr.title),
                         Text(
-                          tr.date.toString(),
+                          tr.title,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          DateFormat('d MMM y').format(tr.date),
+                          style: TextStyle(color: Colors.grey),
                         )
                       ],
                     )
                   ],
                 ));
               }).toList(),
-            )
+            ),
+            Card(
+                elevation: 5,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Titulo'),
+                    ),
+                    TextField(
+                        decoration: InputDecoration(labelText: 'Valor (R\$)')),
+                    ElevatedButton(
+                        onPressed: () {}, 
+                        child: Text(
+                          'Nova transação',
+                          style: TextStyle(color: Colors.purple),
+                        )),
+                  ]),
+                )),
           ],
         ));
   }
